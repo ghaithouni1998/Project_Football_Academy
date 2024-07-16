@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Reg</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="/flask_app/static/style.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            background-image: no-repeat;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        h1 {
+            color: #007bff;
+        }
+
+        h3 {
+            color: #343a40;
+        }
+
+        .form-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container label {
+            color: #495057;
+        }
+
+        .form-container input,
+        .form-container button {
+            margin-top: 10px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        .text-danger {
+            color: #dc3545;
+        }
+
+        label {
+            color: white;
+            font-size: larger;
+        }
+
+        p {
+            color: white;
+            font-size: larger;
+        }
+
+        h3 {
+            color: white;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            background-image: no-repeat;
+        }
+
+        .container {
+            margin-top: 50px;
+            min-height: 100vh;
+        }
+
+        h1 {
+            color: #007bff;
+        }
+
+        h3 {
+            color: #343a40;
+        }
+
+        .form-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container label {
+            color: #495057;
+        }
+
+        .form-container input,
+        .form-container button {
+            margin-top: 10px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        .text-danger {
+            color: #dc3545;
+        }
+
+        label {
+            color: white;
+            font-size: larger;
+        }
+
+        p {
+            color: white;
+            font-size: larger;
+        }
+
+        h3 {
+            color: white;
+        }
+
+        #navbar {
+            height: 100px;
+        }
+        #hhgfhf{
+            margin-top: 250px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="navbar" class="bg-secondary d-flex justify-content-between align-items-md-center">
+        <img src="../static/assets/football-and-soccer-academy-logo-template-free-vector-removebg-preview.png" alt=""
+            width="100px">
+        <div id="navbar-right">
+            <a class="btn btn-light w3-hover-black" href="/">Home</a>
+            <a class="btn btn-light w3-hover-black" href="/#about">About</a>
+            <a class="btn btn-light w3-hover-black" href="/#contact">Contact</a>
+        </div>
+    </div>
+    <section class="video-background">
+        <video autoplay muted loop id="video-background" class="fullscreen-video w-100">
+            <source src="{{ url_for('static', filename='assets/pexels-cottonbro-10349005 (Original).mp4') }}"
+                type="video/mp4" />
+        </video>
+        <div class="content container" id="hhgfhf">
+            <div class="row d-flex justify-content-center gap-3" style="min-height: 620px" id="1">
+                <div id="bg_img_select"
+                    class="card bg-image col-5 widgetcontainer p-5 text-center shadow-1-strong rounded text-white auth-image-content-container"
+                    style="
+              overflow: hidden;
+
+              background-image: url('https://images.pexels.com/photos/102448/pexels-photo-102448.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr1');
+              background-repeat: no-repeat;
+
+              background-size: cover;
+            ">
+                    <div class="card-header">FOOTBALL</div>
+                    <p class="card-text">
+                        <select onchange="type_select()" class="form-select opacity-50"
+                            aria-label="Default select example" name="type" id="type">
+                            <option selected>CHOOSE YOUR ROLE!</option>
+                            <option value="scouts">SCOUT</option>
+                            <option value="trainers">TRAINER</option>
+                            <option value="players">PLAYER</option>
+                        </select>
+                    </p>
+                </div>
+                <div class="{{d_reg}} col-6">
+                    <div>
+                        <h3>Register</h3>
+                        {% with messages = get_flashed_messages(category_filter=["reg"])
+                        %}
+                        <!-- declare a variable called messages -->
+                        {% if messages %}
+                        <!-- check if there are any messages -->
+                        {% for message in messages %}
+                        <!-- loop through the messages -->
+                        <p class="text-danger">{{message}}</p>
+                        <!-- display each message in a paragraph tag -->
+                        {% endfor %} {% endif %} {% endwith %}
+
+                        <form id="reg" action="/scouts/register" method="post">
+                            <div class="mb-3 w-50">
+                                <label for="first_name" class="form-label">First Name</label>
+                                <input type="text" class="form-control shadow opacity-50" id="first_name"
+                                    name="first_name" />
+                            </div>
+                            <div class="mb-3 w-50">
+                                <label for="last_name" class="form-label">Last Name</label>
+                                <input type="text" class="form-control shadow opacity-50" id="last_name"
+                                    name="last_name" />
+                            </div>
+                            <div class="mb-3 w-50">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="text" class="form-control shadow opacity-50" id="email" name="email" />
+                            </div>
+                            <div class="mb-3 w-50">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control shadow opacity-50" id="password"
+                                    name="password" />
+                            </div>
+                            <div class="mb-3 w-50">
+                                <label for="confirm_password" class="form-label">Confirm Password</label>
+                                <input type="password" class="form-control shadow opacity-50" id="confirm_password"
+                                    name="confirm_password" />
+                            </div>
+                            <!-- <select
+                  class="form-select opacity-50"
+                  aria-label="Default select example"
+                  name="type"
+                >
+                  <option selected>Open this select menu</option>
+                  <option value="players">player</option>
+                  <option value="scouts">scout</option>
+                  <option value="trainers">trainer</option>
+                </select> -->
+                            <button type="submit" class="btn btn-outline-primary mt-2">
+                                SIGN UP
+                            </button>
+                            <p class="text-center mt-2">
+                                Already have an account? <a href="/login">Login here</a>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+                <div class=" {{d_login}} col-6">
+                    <h3>Login</h3>
+                    {% with messages = get_flashed_messages(category_filter=["log"]) %}
+                    <!-- declare a variable called messages -->
+                    {% if messages %}
+                    <!-- check if there are any messages -->
+                    {% for message in messages %}
+                    <!-- loop through the messages -->
+                    <p class="text-danger">{{message}}</p>
+                    <!-- display each message in a paragraph tag -->
+                    {% endfor %} {% endif %} {% endwith %}
+
+                    <form id="log" action="/scouts/login" class="d-flex flex-column justify-content-center"
+                        style="min-height: 500px" method="post">
+                        <div class="mb-3">
+                            <label for="login_email" class="form-label">Email</label>
+                            <input type="text" class="form-control shadow opacity-50" id="login_email" name="email" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="login_password" class="form-label">Password</label>
+                            <input type="password" class="form-control shadow opacity-50" id="login_password"
+                                name="password" />
+                        </div>
+                        <button type="submit" class="btn btn-outline-primary mt-2">
+                            Login
+                        </button>
+                        <p class="text-center">
+                            Are new here? let's get you up and running⚽!
+                        </p>
+                        <a class="text-center" href="/index">Sign Up</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function type_select() {
+            select = document.getElementById("type");
+            bg_img_select = document.getElementById("bg_img_select");
+            reg = document.getElementById("reg");
+            log = document.getElementById("log");
+
+            switch (select.value) {
+                case "scouts":
+                    console.log(bg_img_select);
+                    reg.action = "/scouts/register";
+                    log.action = "/scouts/login";
+                    bg_img_select.style =
+                        " background: url('../static/assets/bg_img_scout.gif'); background-size: cover;";
+                    break;
+                case "trainers":
+                    console.log(bg_img_select);
+                    reg.action = "/trainers/register";
+                    log.action = "/trainers/login";
+                    bg_img_select.style =
+                        " background: url('../static/assets/bg_img_trainer.gif'); background-size: cover;";
+
+                    break;
+                case "players":
+                    console.log(bg_img_select);
+                    reg.action = "/players/register";
+                    log.action = "/players/login";
+                    bg_img_select.style =
+                        " background: url('../static/assets/bg_img_player.gif'); background-size: cover;";
+
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,254 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FOOTBALL</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
+
+    <style>
+      body {
+        background-image: url(https://images.pexels.com/photos/47730/the-ball-stadion-football-the-pitch-47730.jpeg?auto=compress&cs=tinysrgb&w=600);
+        background-repeat: no-repeat;
+        background-size: cover;
+        color: #fff;
+      }
+
+      .container {
+        margin-top: 50px;
+      }
+
+      .btn-container {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      label {
+        font-size: 1.5rem;
+      }
+
+      input {
+        border: 2px solid rgba(255, 255, 255, 0.5);
+        border-radius: 5px;
+        padding: 10px;
+        width: 100%;
+        color: #fff;
+        background-color: rgba(255, 255, 255, 0.1);
+        transition: border-color 0.3s, background-color 0.3s;
+        opacity: 0.8;
+        /* Adjust opacity level */
+      }
+
+      input:focus {
+        border-color: rgba(255, 255, 255, 0.8);
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+
+      .btn-outline-dark {
+        background-color: transparent;
+        color: #fff;
+        border: 2px solid #fff;
+        padding: 10px 20px;
+        font-size: 1.5rem;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .btn-outline-dark:hover {
+        background-color: #fff;
+        color: #000;
+      }
+    </style>
+    
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="ghaith mt-4 p-5 text-center rounded">
+        <a href="/trainers/logout" class="btn btn-danger">LOGOUT</a>
+        <a href="/trainers/dashboard" class="btn btn-secondary">profile</a>
+      </div>
+
+      {% with messages = get_flashed_messages(category_filter=["reg"]) %} {% if
+      messages %} {% for message in messages %}
+      <p class="text-danger">{{message}}</p>
+      {% endfor %} {% endif %} {% endwith %}
+
+      <form
+        action="/offers/create"
+        method="post"
+        class="row text-center text-danger"
+      >
+        <div class="col-6">
+          <div class="form-group">
+            <select class="form-select" name="position" id="position">
+              <option selected>Select Position in Field:</option>
+              <option value="Forward">
+                <p><abbr title="Forward">Forward</abbr></p>
+              </option>
+              <option value="Center">
+                <p><abbr title="Center">Center</abbr></p>
+              </option>
+              <option value="Defense">
+                <p><abbr title="Defense">Defense</abbr></p>
+              </option>
+              <option value="Goalkeeper">
+                <p><abbr title="Goalkeeper">Goalkeeper</abbr></p>
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="age"></label>
+            <input
+              type="text"
+              class="form-control"
+              name="age"
+              placeholder="age"
+            />
+          </div>
+        </div>
+
+        <div class="col-6">
+          <div class="form-group">
+            <label for="weight"></label>
+            <input
+              type="text"
+              class="form-control"
+              name="weight"
+              placeholder="weight"
+            />
+          </div>
+          <div class="form-group">
+            <label for="height"></label>
+            <input
+              type="text"
+              class="form-control"
+              name="height"
+              placeholder="height"
+            />
+          </div>
+          <div class="form-group">
+           </div>
+            <div class="accordion" id="accordionExample">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <label for="skills"></label>
+                    <input
+                      type="number"
+                      id="skills"
+                      class="form-control"
+                      placeholder="Skills"
+                      disabled
+                    />                  </button>
+                    <input
+                      id="skills1"
+                      name="skills"
+                      class="form-control"
+                      placeholder="Skills"
+                      hidden
+                    />                  </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    <input class="text-end text-info fw-bold"
+                      type="number"
+                      id="stamina"
+                      onchange="calc()"
+                      class="form-control"
+                      name="stamina"
+                      placeholder="Stamina"
+                    />
+                    <input class="text-end text-info fw-bold"
+                    type="number"
+                    onchange="calc()"
+                    class="form-control"
+                      name="kicking"
+                      placeholder="Kicking"
+                    />
+                    <input class="text-end text-info fw-bold"
+                    type="number"
+                    onchange="calc()"
+                    class="form-control"
+                      name="speed"
+                      placeholder="Speed"
+                    />
+                    <input class="text-end text-info fw-bold"
+                    type="number"
+                    onchange="calc()"
+                    class="form-control"
+                      name="physique"
+                      placeholder="Physique"
+                    />
+                    <input class="text-end text-info fw-bold"
+                    type="number"
+                    onchange="calc()"
+                    class="form-control"
+                      name="technique"
+                      placeholder="Technique"
+                    />
+                    <input class="text-end text-info fw-bold"
+                    type="number"
+                    onchange="calc()"
+                    class="form-control"
+                      name="reflex"
+                      placeholder="Reflex"
+                    /></div>
+                </div>
+              </div>
+          </div>
+        
+
+        <div class="btn-container">
+          <button class="btn btn-outline-dark btn-lg">Create</button>
+        </div>
+      </form>
+    </div>
+
+
+  
+    <script>
+      
+      function calc() {
+        
+      var stamina = parseInt(document.getElementsByName('stamina')[0].value) || 0;
+      var kicking = parseInt(document.getElementsByName('kicking')[0].value) || 0;
+      var speed = parseInt(document.getElementsByName('speed')[0].value) || 0;
+      var physique = parseInt(document.getElementsByName('physique')[0].value) || 0;
+      var technique = parseInt(document.getElementsByName('technique')[0].value) || 0;
+      var reflex = parseInt(document.getElementsByName('reflex')[0].value) || 0;
+      
+      var arr = [stamina, kicking, speed, physique, technique, reflex]
+      coef = [0.8, 0.7, 0.6, 0.7, 0.7, 0.2]
+      var totalSkills = (
+            arr[0] * coef[0]
+            + arr[1] * coef[1]
+            + arr[2] * coef[2]
+            + arr[3] * coef[3]
+            + arr[4] * coef[4]
+            + arr[5] * coef[5]
+        ) / ((coef[0] + (coef[1] + coef[2] + coef[3] + coef[4] + coef[5]))) ;
+    
+      
+      document.getElementById('skills').value = totalSkills;
+      document.getElementById('skills1').value = totalSkills;
+      }
+    
+    
+      </script>
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+  </body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>players</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='/assets/style.css') }}"
+    />
+    <link rel="stylesheet" href="../static/assets/style.css" />
+
+    <style>
+      .team-container {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        perspective: 1000px;
+      }
+
+      .team-item {
+        width: 300px;
+        height: 400px;
+        position: relative;
+        transform-style: preserve-3d;
+        transition: transform 0.5s;
+      }
+
+      .team-item:hover {
+        transform: rotateY(10deg);
+      }
+
+      .team-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+
+      .team-item .details {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: #fff;
+        opacity: 0;
+        transition: opacity 0.5s;
+      }
+
+      .team-item:hover .details {
+        opacity: 1;
+      }
+
+      .details h5 {
+        margin-bottom: 5px;
+        font-size: 18px;
+        font-weight: bold;
+      }
+
+      .details p {
+        font-size: 14px;
+        font-style: italic;
+      }
+
+      .content {
+        position: absolute;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        color: #f1f1f1;
+        width: 100%;
+        padding: 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <video autoplay muted loop>
+      <source
+        src="{{ url_for('static', filename='assets/pexels-cottonbro-10349010 (Original).mp4') }}"
+        type="video/mp4"
+      />
+    </video>
+
+    <div class="content">
+      <h1 class="display-1">Player</h1>
+      <a href="/players/logout" class="btn btn-danger">LOGOUT</a>
+      <a href="/offers_players" class="btn btn-secondary">Choose offer</a>
+      <h3>Welcome,{{loggedin_user.first_name}}</h3>
+    </div>
+
+    <hr />
+    <p>List of offers I chose (waiting for acceptance):</p>
+    <table class="table table-hover">
+      <tr>
+        <th class="soccer-ball"></th>
+        <th>id</th>
+
+        <th>Position</th>
+        <th>Scout</th>
+        <th>Trainer</th>
+      </tr>
+      {% for offer in offers %}
+
+      <tr>
+        <td class="soccer-ball"></td>
+        <td>
+          {{offer.id}}
+          <a class="btn btn-danger btn-sm" href="/offers/liberatep/{{offer.id}}"
+            >Liberate</a
+          >
+        </td>
+
+        <td>{{offer.position}}</td>
+        <td>{{offer.scout_id}}</td>
+        <td>{{get_trainer({"id" : offer.trainer_id}).first_name}}</td>
+      </tr>
+      {% endfor %}
+    </table>
+
+    <div class="container-fluid p-5 bg-black">
+      <div class="mb-5 text-center">
+        <h5 class="text-danger text-uppercase">-OUR CHAMPIONS-</h5>
+        <h1 class="display-3 text-uppercase text-white mb-0">
+          FOOTBALL SUCCESS STORIES
+        </h1>
+      </div>
+      <div class="team-container">
+        <!-- Card 1 -->
+        <div class="team-item">
+          <img
+            src="{{ url_for('static', filename='assets/0_messi.webp') }}"
+            alt=""
+          />
+          <div class="details">
+            <h5>LIONEL MESSI</h5>
+            <p>forward</p>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="team-item">
+          <img
+            src="{{ url_for('static', filename='assets/thisImage.webp') }}"
+            alt=""
+          />
+          <div class="details">
+            <h5>Sergio Busquets</h5>
+            <p>MIDFIELDER</p>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="team-item">
+          <img
+            src="{{ url_for('static', filename='assets/2023-09-16_FCBvsBETIS_97.webp') }}"
+            alt=""
+          />
+          <div class="details">
+            <h5>Cancelo</h5>
+            <p>Defence</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+
+    <script>
+      function toggleButtons(id) {
+        var buttons = document.getElementById("buttons_" + id);
+        buttons.classList.remove("d-none");
+        buttons.classList.add("d-block");
+      }
+
+      function hideButtons(id) {
+        var buttons = document.getElementById("buttons_" + id);
+        buttons.classList.remove("d-block");
+        buttons.classList.add("d-none");
+      }
+
+      function skillsstats_on() {
+        var e = document.getElementById("stats");
+        e.classList.remove("d-none");
+        e.classList.add("d-bloc");
+      }
+      function skillsstats_off() {
+        var e = document.getElementById("stats");
+        e.classList.remove("d-bloc");
+        e.classList.add("d-none");
+      }
+
+      // Get the video
+      var video = document.getElementById("myVideo");
+
+      // Get the button
+      var btn = document.getElementById("myBtn");
+
+      // Pause and play the video, and change the button text
+      function myFunction() {
+        if (video.paused) {
+          video.play();
+          btn.innerHTML = "Pause";
+        } else {
+          video.pause();
+          btn.innerHTML = "Play";
+        }
+      }
+    </script>
+  </body>
+</html>

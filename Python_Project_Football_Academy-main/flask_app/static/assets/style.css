@@ -1,0 +1,124 @@
+.text {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.first-text {
+    color: white;
+}
+
+.sec-text::before {
+    content: "";
+    display: flex;
+    position: absolute;
+    background-color: white;
+    width: 25rem;
+    height: 4rem;
+    left: 7rem;
+    top: 6.5rem;
+    border-left: .3rem solid black;
+    animation-direction: reverse;
+    animation: animation 4s steps(12) infinite;
+}
+
+@keyframes animation {
+
+    40%,
+    60% {
+        left: 31%;
+    }
+
+    100% {
+        left: 10%;
+    }
+}
+
+.image {
+    display: flex;
+    flex-direction: row;
+    margin-top: 5rem;
+    margin-left: 5rem;
+}
+
+.image img {
+    width: 30%;
+    padding-left: 2rem;
+}
+
+
+#myVideo {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+/* Add some content at the bottom of the video/page */
+.content {
+    position: fixed;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    color: #f1f1f1;
+    width: 100%;
+    padding: 20px;
+}
+
+/* Style the button used to pause/play the video */
+#myBtn {
+    width: 200px;
+    font-size: 18px;
+    padding: 10px;
+    border: none;
+    background: #000;
+    color: #fff;
+    cursor: pointer;
+}
+
+#myBtn:hover {
+    background: #ddd;
+    color: black;
+}
+
+.ghaith {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Style the video: 100% width and height to cover the entire window */
+#myVideo {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+/* Add some content at the bottom of the video/page */
+.content {
+    position: fixed;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    color: #f1f1f1;
+    width: 100%;
+    padding: 20px;
+}
+
+/* Style the button used to pause/play the video */
+#myBtn {
+    width: 200px;
+    font-size: 18px;
+    padding: 10px;
+    border: none;
+    background: #000;
+    color: #fff;
+    cursor: pointer;
+}
+
+#myBtn:hover {
+    background: #ddd;
+    color: black;
+}
+video{
+    width: 100%;
+}

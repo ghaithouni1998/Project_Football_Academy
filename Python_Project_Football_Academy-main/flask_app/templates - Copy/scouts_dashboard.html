@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>scout</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+      body {
+        background-color: black;
+        background-image: url(../static/assets/suit.jpg);
+        background-repeat: repeat;
+        width: 100%;
+      }
+      .ghaith {
+        background-repeat: no-repeat;
+        height: 500px;
+
+        background-size: cover;
+      }
+      .ghaith h1 {
+        font-size: 5rem;
+        font-weight: bold;
+      }
+
+      .botton {
+        margin-top: 2rem;
+      }
+      .botton a {
+        padding: 0.7rem 2rem;
+        transition: 0.5s ease;
+      }
+      .botton a:hover {
+        letter-spacing: 0.2rem;
+      }
+      .team-container {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        perspective: 1000px;
+      }
+
+      .team-item {
+        width: 300px;
+        height: 400px;
+        position: relative;
+        transform-style: preserve-3d;
+        transition: transform 0.5s;
+      }
+
+      .team-item:hover {
+        transform: rotateY(10deg);
+      }
+
+      .team-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+
+      .team-item .details {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: #fff;
+        opacity: 0;
+        transition: opacity 0.5s;
+      }
+
+      .team-item:hover .details {
+        opacity: 1;
+      }
+
+      .details h5 {
+        margin-bottom: 5px;
+        font-size: 18px;
+        font-weight: bold;
+      }
+
+      .details p {
+        font-size: 14px;
+        font-style: italic;
+      }
+
+      .text {
+        font-size: 3rem;
+        font-weight: bold;
+        color: white;
+      }
+      .first-text {
+        color: black;
+      }
+
+      .sec-text::before {
+        content: "";
+        display: flex;
+        position: absolute;
+        background-color: black;
+        width: 50rem;
+        height: 4rem;
+        left: 7rem;
+        top: 33rem;
+        border-left: 0.3rem solid white;
+        animation-direction: reverse;
+        animation: animation 4s steps(12) infinite;
+      }
+
+      @keyframes animation {
+        40%,
+        60% {
+          left: 33%;
+        }
+        100% {
+          left: 10%;
+        }
+      }
+
+      .image {
+        display: flex;
+        flex-direction: row;
+        margin-top: 5rem;
+        margin-left: 5rem;
+      }
+
+      .image img {
+        width: 30%;
+        padding-left: 2rem;
+      }
+      .mb-5 {
+        background-color: rgb(48, 48, 48);
+        border-radius: 0.5rem;
+        padding-bottom: 5rem;
+        padding-top: 1rem;
+      }
+
+      td {
+        color: white;
+      }
+      p {
+        color: rgb(246, 47, 47);
+        font-weight: bold;
+      }
+
+      ::-webkit-scrollbar {
+        width: 8px;
+        background-color: transparent;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background-color: rgb(48, 48, 48);
+      }
+    </style>
+  </head>
+
+  <body class="container">
+    <div
+      class="ghaith mt-4 p-5 text-dark rounded text-center"
+      style="
+        background-image: url(https://www.juniorgrassroots.uk/wp-content/uploads/2022/04/The-Code-of-Conduct-for-Football-Scouts-Guidance-for-Grassroots-Football.jpeg);
+      "
+    >
+      <h1>SCOUTS</h1>
+      <div class="botton">
+        <a href="/scouts/logout" class="btn btn-danger">LOGOUT</a>
+        <a href="/offers_scouts" class="btn btn-secondary">Go to offers</a>
+      </div>
+    </div>
+
+    <div class="text">
+      <span class="text first-text"></span>
+      <span class="text sec-text"></span>
+    </div>
+
+    <hr />
+    <p>List of my offers accepted from trainers</p>
+    <table class="table text-black table-hover">
+      <tr class="table-dark">
+        <th>id</th>
+        <th>position</th>
+        <th>weight</th>
+        <th>height</th>
+        <th>Age</th>
+        <th>skills</th>
+        <th>trainer</th>
+      </tr>
+
+      {% for offer in my_offers %} {% if offer.scout_id == loggedin_user.id %}
+      <tr>
+        <td>
+          <div
+            onmouseover="toggleButtons('{{ offer.id }}')"
+            onmouseout="hideButtons('{{ offer.id }}')"
+          >
+            {{ offer.id }}
+            <div id="buttons_{{ offer.id }}" class="d-none">
+              <a
+                href="/offers/liberate/{{ offer.id }}"
+                class="btn btn-danger btn-sm"
+                >Liberate</a
+              >
+            </div>
+          </div>
+        </td>
+        <td>{{ offer.position }}</td>
+        <td>{{ offer.weight }}</td>
+        <td>{{ offer.height }}</td>
+        <td>{{ offer.age }}</td>
+
+        <td>
+          <div
+            onmouseover="showSkills('{{ offer.id }}')"
+            onmouseout="hideSkills('{{ offer.id }}')"
+          >
+            {{ offer.skills }}
+            <div id="skills_{{ offer.id }}" class="d-none">
+              <dl
+                class="row bg-info bg-opacity-10 border border-3 border-dark rounded"
+              >
+                <dl
+                  class="row bg-info bg-opacity-10 border border-3 border-dark rounded"
+                >
+                  <dt class="col-sm-3 text-primary">,,,,,,ll</dt>
+                  <dd class="col-sm-9">
+                    A description list is perfect for defining terms.
+                  </dd>
+                  <dt class="col-sm-3 text-primary">Description lists</dt>
+                  <dd class="col-sm-9">
+                    A description list is perfect for defining terms.
+                  </dd>
+                  <dt class="col-sm-3 text-primary">Description lists</dt>
+                  <dd class="col-sm-9">
+                    A description list is perfect for defining terms.
+                  </dd>
+                  <dt class="col-sm-3 text-primary">Description lists</dt>
+                  <dd class="col-sm-9">
+                    A description list is perfect for defining terms.
+                  </dd>
+                  <dt class="col-sm-3 text-primary">Description lists</dt>
+                  <dd class="col-sm-9">
+                    A description list is perfect for defining terms.
+                  </dd>
+                  <dt class="col-sm-3 text-primary">Description lists</dt>
+                  <dd class="col-sm-9">
+                    A description list is perfect for defining terms.
+                  </dd>
+                </dl>
+              </dl>
+            </div>
+          </div>
+        </td>
+        <td>{{get_trainer({"id" : offer.trainer_id}).first_name}}</td>
+      </tr>
+      {% endif %} {% endfor %}
+    </table>
+
+    <script>
+      function toggleButtons(id) {
+        var buttons = document.getElementById("buttons_" + id);
+        buttons.classList.remove("d-none");
+        buttons.classList.add("d-block");
+      }
+
+      function hideButtons(id) {
+        var buttons = document.getElementById("buttons_" + id);
+        buttons.classList.remove("d-block");
+        buttons.classList.add("d-none");
+      }
+
+      function showSkills(id) {
+        var skills = document.getElementById("skills_" + id);
+        skills.classList.remove("d-none");
+        skills.classList.add("d-block");
+      }
+
+      function hideSkills(id) {
+        var skills = document.getElementById("skills_" + id);
+        skills.classList.remove("d-block");
+        skills.classList.add("d-none");
+      }
+
+      const text = document.querySelector(".sec-text");
+
+      const textLoad = () => {
+        setTimeout(() => {
+          text.textContent = "welcome, ";
+        }, 0);
+
+        setTimeout(() => {
+          text.textContent = "{{loggedin_user.first_name}}";
+        }, 4000);
+
+        // setTimeout(() =>{
+        //     text.textContent = "";
+        // }, 8000);
+      };
+
+      textLoad();
+      setInterval(textLoad, 12000);
+    </script>
+
+    <div class="container-fluid p-5 bg-black">
+      <div class="mb-5 text-center">
+        <h5 class="text-danger text-uppercase">The scout</h5>
+        <h1 class="display-3 text-uppercase text-white mb-0">
+          “The scout is the one who brings the main assets to the club! »
+        </h1>
+        <div class="image">
+          <img
+            src="{{ url_for('static', filename='assets/afp_en_8babdc7097ec6fee1abae432795b6a69b4e22b4d.jpg') }}"
+            alt=""
+          />
+          <img
+            src="{{ url_for('static', filename='assets/IMG_2514-1024x683.jpg') }}"
+            alt=""
+          />
+          <img
+            src="{{ url_for('static', filename='assets/téléchargement (1).jpeg') }}"
+            alt=""
+          />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

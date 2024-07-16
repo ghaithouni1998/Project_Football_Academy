@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <title>New Player</title>
+    <style>
+        .ghaith {
+        background-repeat: no-repeat;
+        height: 500px;
+        background-size: cover;
+      }
+        .show1{
+          display: {{show[1]}};
+        }
+        .show2{
+          display: {{show[2]}};
+        }
+        .show3{
+          display: {{show[3]}};
+        }
+        div.scroll {
+              margin: 4px, 4px;
+              padding: 4px;
+              width: 300px;
+              overflow-x: auto;
+              overflow-y: hidden;
+              white-space: nowrap;
+          }
+    </style>
+  </head>
+  <body class="m-5">
+    <div class="mb-5 d-flex justify-content-around align-items-center">
+      <h1 class="display-1">New Player Details</h1>
+      <div>
+        <a href="/players/logout" class="btn btn-danger">LOGOUT</a>
+        <a href="/players/{{loggedin_user.id}}/dashboard" class="btn btn-info"
+          >DASHBOARD</a
+        >
+      </div>
+    </div>
+    <h3>welcome,{{loggedin_user.first_name}}</h3>
+    <hr />
+    <div class="scroll" style="width: fit-content; height: fit-content">
+      <video
+        class="p-3"
+        autoplay
+        muted
+        src="/static/assets/training.mp4"
+      ></video>
+      <video
+        class="p-3"
+        loop
+        autoplay
+        muted
+        src="/static/assets/training1.mp4"
+      ></video>
+      <video
+        class="p-3"
+        loop
+        autoplay
+        muted
+        src="/static/assets/training2.mp4"
+      ></video>
+      <video
+        class="p-3"
+        loop
+        autoplay
+        muted
+        src="/static/assets/training3.mp4"
+      ></video>
+    </div>
+    <div id="add_stats" style="width: 2000px" class="show1">
+      <p><i> Input the following stats</i></p>
+      <form
+        action="/players/{{loggedin_user.id}}/add_stats"
+        method="post"
+        class="d-flex flex-column gap-3 border border-dark border-2 p-3 rounded"
+      >
+        <div class="mb-3">
+          <label for="birthdate" class="form-label"
+            >Birthday:
+            <input
+              type="date"
+              id="birthdate"
+              class="form-control"
+              name="birthdate"
+          /></label>
+        </div>
+        <div class="mb-3">
+          <label for="weight" class="form-label">Weight:</label>
+          <input type="number" id="weight" name="weight" class="form-control" />
+          <label for="weight" class="form-label">kg</label>
+        </div>
+        <div class="mb-3">
+          <label for="height" class="form-label"
+            >Height:
+            <input
+              type="number"
+              id="height"
+              name="height"
+              class="form-control"
+            />
+            cm</label
+          >
+        </div>
+        <div>
+          <label for="">Select Position in Field:</label>
+          <select class="form-select" size="4" name="position">
+            <option selected>Position</option>
+            <option value="Forward">
+              <p><abbr title="Forward">Forward</abbr></p>
+            </option>
+            <option value="Center">
+              <p><abbr title="Center">Center</abbr></p>
+            </option>
+            <option value="Defense">
+              <p><abbr title="Defense">Defense</abbr></p>
+            </option>
+            <option value="Goalkeeper">
+              <p><abbr title="Goalkeeper">Goalkeeper</abbr></p>
+            </option>
+          </select>
+        </div>
+        <div>
+          <label>Select Preffered Foot</label>
+          <select class="form-select" name="foot">
+            <option selected>Preffered Foot</option>
+            <option value="left">Left</option>
+            <option value="right">Right</option>
+          </select>
+        </div>
+        <input type="submit" value="submit" />
+      </form>
+    </div>
+    <!-- <dl id="stats_present" class="row border border-3 border-dark d-none"> -->
+
+    <form action="/players/{{loggedin_user.id}}/create_player3">
+      <input
+        class="show2 btn btn bg-info w-100"
+        type="submit"
+        value="Apply for Test"
+      />
+    </form>
+    <dl
+      id="stats_present"
+      class="row bg-info bg-opacity-10 border border-3 border-dark rounded show3"
+    >
+      <dt class="col-sm-3 text-primary">Stamina</dt>
+      <dd id="count0" class="col-sm-9">{{arr[0]}}</dd>
+      <dt class="col-sm-3 text-primary">Kicking</dt>
+      <dd id="count1" class="col-sm-9">{{arr[1]}}</dd>
+      <dt class="col-sm-3 text-primary">speed</dt>
+      <dd id="count2" class="col-sm-9">{{arr[2]}}</dd>
+      <dt class="col-sm-3 text-primary">physique</dt>
+      <dd id="count3" class="col-sm-9">{{arr[3]}}</dd>
+      <dt class="col-sm-3 text-primary">technique</dt>
+      <dd id="count4" class="col-sm-9">{{arr[4]}}</dd>
+      <dt class="col-sm-3 text-primary">reflex</dt>
+      <dd id="count5" class="col-sm-9">{{arr[5]}}</dd>
+    </dl>
+    <script>
+      window.onload = apply_test;
+      function apply_test() {
+        for (var i = 0; i < 6; i++) {
+          var str = `count${i}`;
+          var elm = document.getElementById(str);
+          startCounter(elm, parseInt(elm.textContent), 100);
+        }
+      }
+
+      function startCounter(e, target, duration) {
+        let count = 0;
+
+        duration *= 1000;
+
+        const step = Math.ceil(target / (duration / 100));
+
+        const timer = setInterval(() => {
+          count = count + step;
+          if (count >= target) {
+            clearInterval(timer);
+            count = target;
+          }
+          e.textContent = count;
+        }, 10);
+      }
+    </script>
+  </body>
+</html>

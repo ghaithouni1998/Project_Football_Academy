@@ -1,0 +1,43 @@
+.text {
+  font-size: 3rem;
+  font-weight: bold;
+}
+.first-text {
+  color: white;
+}
+
+.sec-text::before {
+  content: "";
+  display: flex;
+  position: absolute;
+  background-color: white;
+  width: 50rem;
+  height: 4rem;
+  left: 7rem;
+  top: 6.5rem;
+  border-left: 0.3rem solid black;
+  animation-direction: reverse;
+  animation: animation 4s steps(12) infinite;
+}
+
+@keyframes animation {
+  40%,
+  60% {
+    left: 40%;
+  }
+  100% {
+    left: 10%;
+  }
+}
+
+.image {
+  display: flex;
+  flex-direction: row;
+  margin-top: 5rem;
+  margin-left: 5rem;
+}
+
+.image img {
+  width: 30%;
+  padding-left: 2rem;
+}

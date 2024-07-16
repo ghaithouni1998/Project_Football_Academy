@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <title>Player</title>
+    <style>
+      body {
+        background: #007bff; /* Fallback for browsers that don't support gradients */
+        background: linear-gradient(
+          to right,
+          #007bff,
+          #1a1a1a
+        ); /* Gradient background */
+        color: #fff; /* White text color */
+        font-family: "Arial", sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      .header {
+        background: url("soccer-field.jpg") no-repeat center center fixed; /* Soccer field background image */
+        background-size: cover;
+        padding: 50px;
+        text-align: center;
+      }
+
+      .btn-danger {
+        background-color: #dc3545; /* Dark red color for 'LOGOUT' button */
+        border-color: #dc3545; /* Dark red border color for 'LOGOUT' button */
+      }
+
+      .btn-secondary {
+        background-color: #6c757d; /* Dark gray color for 'Choose offer' button */
+        border-color: #6c757d; /* Dark gray border color for 'Choose offer' button */
+      }
+
+      h1,
+      h3,
+      p {
+        color: #ffc107; /* Dark yellow color for headers and text */
+      }
+
+      hr {
+        border-color: #ffc107; /* Dark yellow color for the horizontal rule */
+      }
+
+      table {
+        background-color: rgba(
+          255,
+          255,
+          255,
+          0.7
+        ); /* Semi-transparent white background for the table */
+        color: #333; /* Dark gray text color for the table */
+        border-radius: 10px; /* Rounded corners for the table */
+        overflow: hidden; /* Hide overflowing content */
+        margin: 20px;
+      }
+
+      .table-success {
+        background-color: #28a745; /* Dark green color for success rows */
+      }
+
+      .table-info {
+        background-color: #007bff; /* Dark blue color for info rows */
+      }
+
+      th,
+      td {
+        border-color: #444; /* Dark gray border color for table cells */
+      }
+
+      .soccer-ball {
+        width: 30px;
+        height: 30px;
+        background: url("soccer-ball.png") no-repeat;
+        background-size: cover;
+        display: inline-block;
+        margin-right: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1 class="display-1">Player</h1>
+      <a href="/players/logout" class="btn btn-danger">LOGOUT</a>
+      <a href="/offers_players" class="btn btn-secondary">Choose offer</a>
+      <h3>Welcome,{{loggedin_user.first_name}}</h3>
+    </div>
+    <hr />
+    <p>List of offers I chose (waiting for acceptance):</p>
+    <table class="table table-hover">
+      <tr>
+        <th class="soccer-ball"></th>
+        <th>id</th>
+        <th>match %</th>
+        <th>Position</th>
+        <th>Trainer</th>
+      </tr>
+      {% for offer in offers %}
+      <tr>
+        <td class="soccer-ball"></td>
+        <td>
+          {{offer.id}}
+          <a class="btn btn-danger" href="/offers/liberatep/{{offer.id}}"
+            >quit</a
+          >
+        </td>
+        <td>{{offer.score}}</td>
+        <td>{{offer.position}}</td>
+        <td>{{offer.scout_id}}</td>
+        <td>{{get_trainer({"id" : offer.trainer_id}).first_name}}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>
